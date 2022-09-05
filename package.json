@@ -1,7 +1,7 @@
 {
   "name": "crud_node_express_mysql_react",
   "version": "1.0.0",
-  "description": "Mi primer CRUD ",
+  "description": "Mi primer CRUD",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js"
