@@ -1,0 +1,7 @@
+.alumnos {
+  display: flex;
+}
+
+.numero-alumnos {
+  text-align: center;
+}
