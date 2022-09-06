@@ -2,8 +2,10 @@ import React, { useContext } from "react";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
 import AlumnoContext from "../context/alumno/AlumnoContext";
-import { TextField, Button } from "@mui/material";
-
+import { TextField } from "@mui/material";
+import { Send } from "@mui/icons-material";
+import { LoadingButton } from "@mui/lab";
+import '../styles/FormAlumn.css'
 
 const FormAlumn = () => {
   const values = useContext(AlumnoContext);
@@ -33,7 +35,7 @@ const FormAlumn = () => {
   };
 
   return (
-    <div>
+    <section>
       <Formik
         initialValues={initialValues}
         validationSchema={formSchema}
@@ -43,8 +45,16 @@ const FormAlumn = () => {
           actions.setSubmitting(false);
         }}
       >
-        {({ errors, touched, handleChange, handleSubmit, values }) => (
-          <Form onSubmit={handleSubmit}>
+        {({
+          errors,
+          touched,
+          handleChange,
+          handleSubmit,
+          values,
+          isSubmitting,
+          handleClick,
+        }) => (
+          <Form onSubmit={handleSubmit} className="form">
             <TextField
               error={errors.nombre && touched.nombre && true}
               name="nombre"
@@ -89,11 +99,20 @@ const FormAlumn = () => {
               value={values.email}
               helperText={errors.email && touched.email && errors.email}
             />
-            <Button variant="contained" type="submit">Enviar</Button>
+            <LoadingButton
+              type="submit"
+              onClick={handleClick}
+              endIcon={<Send />}
+              loading={isSubmitting}
+              loadingPosition="end"
+              variant="contained"
+            >
+              Enviar
+            </LoadingButton>
           </Form>
         )}
       </Formik>
-    </div>
+    </section>
   );
 };
 

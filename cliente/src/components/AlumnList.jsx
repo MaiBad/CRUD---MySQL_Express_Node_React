@@ -45,7 +45,7 @@ export const AlumnList = () => {
 
   return (
     <div className="container">
-      <AlumnoContext.Provider value={{ state, dltAlumno, addAlumno }}>
+      <AlumnoContext.Provider value={{ state, dltAlumno, addAlumno }} >
         <Table />
         <FormAlumn />
       </AlumnoContext.Provider>
