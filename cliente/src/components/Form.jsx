@@ -1,16 +1,17 @@
 import React, { useContext } from "react";
 import * as Yup from "yup";
-import { Form, Formik } from "formik";
-import AlumnoContext from "../context/alumno/AlumnoContext";
-import { TextField, Modal, Box } from "@mui/material";
-import { Send } from "@mui/icons-material";
+import { Formik, Form as Formulario } from "formik";
+import { Modal, TextField, Box } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
-import "../styles/FormAlumn.css";
+import { Send } from "@mui/icons-material";
+import AlumnoContext from "../context/alumno/AlumnoContext";
+import "../styles/Form.css";
 
-const FormAlumn = ({ modal, handleModal }) => {
-  const values = useContext(AlumnoContext);
-  const { addAlumno } = values;
+const Form = () => {
+  const { open, create, handleClose, values, addAlumno, updAlumno, id } =
+    useContext(AlumnoContext);
 
+  //Validación
   const formSchema = Yup.object().shape({
     nombre: Yup.string()
       .max(50, "Demasiado Largo!")
@@ -27,47 +28,56 @@ const FormAlumn = ({ modal, handleModal }) => {
       .required("Correo obligatorio!"),
   });
 
-  const initialValues = {
-    nombre: "",
-    apellido: "",
-    edad: "",
-    email: "",
-  };
-
+  //Estilo del modal
   const style = {
     position: "absolute",
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
     width: 400,
-    bgcolor: "background.paper",
     border: "2px solid #000",
     boxShadow: 24,
-    p: 4,
+  };
+
+  //Valores iniciales del formulario
+  const initialValues = {
+    nombre: values.nombre,
+    apellido: values.apellido,
+    edad: values.edad,
+    email: values.email,
   };
 
   return (
-    <Modal open={modal} onClose={handleModal}>
-      <Box sx={style}>
+    <Modal
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+    >
+      <Box style={style}>
         <Formik
           initialValues={initialValues}
           validationSchema={formSchema}
-          onSubmit={async (values, actions) => {
-            await addAlumno(values);
-            actions.resetForm();
+          onSubmit={(values, actions) => {
+            if (create) {
+              addAlumno(values);
+            } else {
+              updAlumno(id, values);
+            }
             actions.setSubmitting(false);
+            handleClose();
           }}
         >
           {({
             errors,
             touched,
+            values,
             handleChange,
             handleSubmit,
-            values,
-            isSubmitting,
             handleClick,
+            isSubmitting,
           }) => (
-            <Form onSubmit={handleSubmit} className="form">
+            <Formulario onSubmit={handleSubmit} className="form">
               <TextField
                 error={errors.nombre && touched.nombre && true}
                 name="nombre"
@@ -120,9 +130,9 @@ const FormAlumn = ({ modal, handleModal }) => {
                 loadingPosition="end"
                 variant="contained"
               >
-                Enviar
+                {create ? "Enviar" : "Modificar"}
               </LoadingButton>
-            </Form>
+            </Formulario>
           )}
         </Formik>
       </Box>
@@ -130,4 +140,4 @@ const FormAlumn = ({ modal, handleModal }) => {
   );
 };
 
-export default FormAlumn;
+export default Form;

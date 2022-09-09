@@ -11,3 +11,6 @@ export const crearAlumno = async (data) =>
 
 export const eliminarAlumno = async (id) =>
   await axios.delete(`http://localhost:3000/api/v1/alumnos/${id}`);
+
+export const modificarAlumno = async (id, data) =>
+  await axios.patch(`http://localhost:3000/api/v1/alumnos/${id}`, data);
