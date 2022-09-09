@@ -3,7 +3,8 @@
   margin: 0;
   box-sizing: border-box;
 }
-#root{
+
+#root {
+  background-color: #061a31;
   min-height: 100vh;
-  padding: 2rem;
 }

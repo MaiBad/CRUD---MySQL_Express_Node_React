@@ -1,0 +1,32 @@
+.container {
+  display: flex;
+  padding: 1rem;
+}
+
+.cards-container {
+  width: 80%;
+}
+
+.alumn-container {
+  width: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+@media screen and (max-width: 550px) {
+  .container {
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .cards-container {
+    width: 100%;
+  }
+
+  .alumn-container {
+    width: 100%;
+  }
+}
